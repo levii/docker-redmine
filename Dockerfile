@@ -83,6 +83,7 @@ RUN buildDeps=' \
 	done \
 	&& rm ./config/database.yml \
 	&& rm /usr/src/redmine/Gemfile.local \
+	&& bundle install --without development test \
 	&& apt-get purge -y --auto-remove $buildDeps
 
 VOLUME /usr/src/redmine/files
