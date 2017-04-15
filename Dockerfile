@@ -84,6 +84,11 @@ RUN buildDeps=' \
 
 VOLUME /usr/src/redmine/files
 
+# install additional libraries
+COPY Gemfile.additional /usr/src/redmine/Gemfile.local
+RUN bundle install --without development test \
+	&& rm /usr/src/redmine/Gemfile.local
+
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
