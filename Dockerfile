@@ -60,6 +60,8 @@ RUN wget -O redmine.tar.gz "https://www.redmine.org/releases/redmine-${REDMINE_V
 	&& mkdir -p tmp/pdf public/plugin_assets \
 	&& chown -R redmine:redmine ./
 
+COPY Gemfile.additional /usr/src/redmine/Gemfile.local
+
 RUN buildDeps=' \
 		gcc \
 		libmagickcore-dev \
@@ -80,14 +82,10 @@ RUN buildDeps=' \
 		bundle install --without development test; \
 	done \
 	&& rm ./config/database.yml \
+	&& rm /usr/src/redmine/Gemfile.local \
 	&& apt-get purge -y --auto-remove $buildDeps
 
 VOLUME /usr/src/redmine/files
-
-# install additional libraries
-COPY Gemfile.additional /usr/src/redmine/Gemfile.local
-RUN bundle install --without development test \
-	&& rm /usr/src/redmine/Gemfile.local
 
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
