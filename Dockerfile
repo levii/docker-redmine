@@ -6,6 +6,8 @@ RUN groupadd -r redmine && useradd -r -g redmine redmine
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		ca-certificates \
 		wget \
+		mysql-client \
+		netcat \
 	&& rm -rf /var/lib/apt/lists/*
 
 # grab gosu for easy step-down from root
@@ -79,9 +81,6 @@ RUN buildDeps=' \
 	done \
 	&& rm ./config/database.yml \
 	&& apt-get purge -y --auto-remove $buildDeps
-
-RUN apt-get update && apt-get install -y mysql-client netcat \
-	&& rm -rf /var/lib/apt/lists/*
 
 VOLUME /usr/src/redmine/files
 
