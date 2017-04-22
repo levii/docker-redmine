@@ -1,7 +1,7 @@
 FROM ruby:2.3-slim
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
-RUN groupadd -r redmine && useradd -r -g redmine redmine
+RUN groupadd -r redmine && useradd -r -g redmine -u 500 redmine
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		ca-certificates \
