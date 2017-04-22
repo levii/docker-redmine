@@ -85,7 +85,7 @@ RUN buildDeps=' \
 	&& rm /usr/src/redmine/Gemfile.local \
 	&& bundle install --without development test \
 	&& apt-get purge -y --auto-remove $buildDeps \
-	&& chown -R redmine:redmine /usr/local/bundle
+	&& chown -R redmine:redmine /usr/local/bundle /usr/src/redmine
 
 VOLUME /usr/src/redmine/files
 
