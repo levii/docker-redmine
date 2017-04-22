@@ -84,12 +84,15 @@ RUN buildDeps=' \
 	&& rm ./config/database.yml \
 	&& rm /usr/src/redmine/Gemfile.local \
 	&& bundle install --without development test \
-	&& apt-get purge -y --auto-remove $buildDeps
+	&& apt-get purge -y --auto-remove $buildDeps \
+	&& chown -R redmine:redmine /usr/local/bundle
 
 VOLUME /usr/src/redmine/files
 
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
+
+USER redmine
 
 EXPOSE 3000
 CMD ["rails", "server", "-b", "0.0.0.0"]
